@@ -36,6 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 30,
               ),
               MaterialButton(
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                   side: const BorderSide(
@@ -43,21 +44,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     color: Colors.black,
                   ),
                 ),
-                //color: Colors.white,
-                height: 45,
+                height: 55,
                 minWidth: 200,
                 child: const Text('Login'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'login_screen');
+                },
               ),
               const SizedBox(
                 height: 15,
               ),
               MaterialButton(
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
                 color: Colors.black,
-                height: 45,
+                height: 55,
                 minWidth: 200,
                 child: const Text(
                   'Register',
@@ -65,7 +68,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'registration_screen');
+                },
               ),
             ],
           ),

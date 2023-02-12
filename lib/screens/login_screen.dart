@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               MaterialButton(
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -50,8 +51,21 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  //Navigator.pushNamed(context, '');
+                },
               ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'registration_screen');
+                  },
+                  child: const Text(
+                    'Sign Up ?',
+                    style: TextStyle(fontSize: 12),
+                  ))
             ],
           ),
         ),
