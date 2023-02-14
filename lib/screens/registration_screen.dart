@@ -1,7 +1,10 @@
+import 'package:chat_app/widgets/register_button.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
+
+  static String id = 'registration_screen';
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -16,7 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children:  [
               const TextField(
                 decoration: InputDecoration(
                   labelText: 'enter your email',
@@ -47,21 +50,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(
                 height: 30,
               ),
-              MaterialButton(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                color: Colors.black,
-                height: 55,
-                minWidth: 200,
-                child: const Text(
-                  'Register',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {},
+              RegisterButton(
+                onpPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ],
           ),
