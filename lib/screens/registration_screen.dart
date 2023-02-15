@@ -19,7 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children:  [
+            children: [
               const TextField(
                 decoration: InputDecoration(
                   labelText: 'enter your email',

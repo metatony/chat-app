@@ -31,10 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 60.0,
-                child: Image.asset('images/logo.png'),
-              ),
+              //SizedBox(
+              //height: 60.0,
+              //child: Image.asset('images/logo.png'),
+              //),
               AnimatedTextKit(
                 animatedTexts: [
                   WavyAnimatedText(
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     textStyle: const TextStyle(
                       fontSize: 35.0,
                       color: Colors.black,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

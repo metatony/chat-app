@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       // initialRoute: WelcomeScreen.id,
       // routes: {
       //   WelcomeScreen.id: (context) => const WelcomeScreen(),
@@ -28,7 +27,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
-        
       ),
     );
   }

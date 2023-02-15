@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     'welcome',
                     style: TextStyle(
                       fontSize: 30.0,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
