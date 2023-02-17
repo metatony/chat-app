@@ -19,22 +19,26 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const TextField(
+              TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'enter your email',
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 ),
+               
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'enter your password',
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 ),
+                
               ),
               const SizedBox(
                 height: 30,
