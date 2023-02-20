@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constants.dart';
 
@@ -45,6 +46,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.white,
               ),
               onPressed: () {
+                _auth.signOut();
+                Navigator.pop(context);
                 //Implement logout functionality
               }),
         ],
