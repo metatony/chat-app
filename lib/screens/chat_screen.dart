@@ -35,6 +35,14 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +56,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.white,
               ),
               onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
+                messagesStream();
+                //_auth.signOut();
+                //Navigator.pop(context);
                 //Implement logout functionality
               }),
         ],
@@ -81,8 +90,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: () {
                       _firestore.collection('messages').add({
-                        'text' : messageText,
-                        'sender' : loggedInUser.email,
+                        'text': messageText,
+                        'sender': loggedInUser.email,
                       });
                       //Implement send functionality.
                     },
