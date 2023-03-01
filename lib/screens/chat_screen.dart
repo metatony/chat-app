@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
+final _firestore = FirebaseFirestore.instance;
+late User loggedInUser;
+
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -19,9 +22,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   final _auth = FirebaseAuth.instance;
-  late User loggedInUser;
+
   late String messageText;
-  final _firestore = FirebaseFirestore.instance;
+  final messageTextController =
+      TextEditingController(); // use this inside  the textfield do we can clear message message once we send
 
   void getCurrentUser() async {
     try {
@@ -32,14 +36,6 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     } catch (e) {
       print(e);
-    }
-  }
-
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
     }
   }
 
@@ -56,16 +52,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Colors.white,
               ),
               onPressed: () {
-                messagesStream();
-                //_auth.signOut();
-                //Navigator.pop(context);
+                _auth.signOut();
+                Navigator.pop(context);
                 //Implement logout functionality
               }),
         ],
-        title: const Text(
-          '⚡️textme',
-          style: TextStyle(color: Colors.white),
-        ),
         backgroundColor: Colors.black,
       ),
       body: SafeArea(
@@ -73,6 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const MessagesStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -80,6 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: messageTextController,
                       onChanged: (value) {
                         messageText = value;
                         //Do something with the user input.
@@ -89,9 +82,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   TextButton(
                     onPressed: () {
+                      messageTextController.clear();
                       _firestore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email,
+                        'time': FieldValue.serverTimestamp(),
+                        //add this to order your text messages with a timestamp
                       });
                       //Implement send functionality.
                     },
@@ -105,6 +101,113 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessagesStream extends StatelessWidget {
+  const MessagesStream({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return //the streanbuilder uses the stream data to build widgets
+        StreamBuilder<QuerySnapshot>(
+      stream: _firestore
+          .collection('messages')
+          .orderBy('time', descending: false)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        final messages = snapshot.data!.docs.reversed;
+        List<MessageBubble> messageBubbles = [];
+        for (var message in messages) {
+          var data = message.data() as Map; //add typecast
+
+          final messageText = data['text'];
+          final messageSender = data['sender'];
+          final messageTime = data['time'] as Timestamp; //add this
+
+          // to differentiate sender and receiver
+          final currentUser = loggedInUser.email;
+
+          if (currentUser == messageSender) {
+            //the message from the logged in user
+          }
+
+          final messageBubble = MessageBubble(
+            sender: messageSender,
+            text: messageText,
+            isMe: currentUser == messageSender,
+            time: messageTime,
+          );
+          messageBubbles.add(messageBubble);
+        }
+
+        return Expanded(
+          child: ListView(
+            reverse: true,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            children: messageBubbles,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  const MessageBubble(
+      {super.key,
+      required this.sender,
+      required this.text,
+      required this.isMe,
+      required this.time});
+
+  final String sender;
+  final String text;
+  final bool isMe;
+  final Timestamp time; // add this
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text(
+
+            sender,
+            style: const TextStyle(fontSize: 10, color: Colors.black54),
+          ),
+          Material(
+            borderRadius: isMe
+                ? const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))
+                : const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
+                     //use tenary oprator instead of if statemnt to create a different sender ui
+            elevation: 4,
+            color: isMe ? Colors.black : Colors.purpleAccent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                text,
+                style: const TextStyle(fontSize: 13, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
