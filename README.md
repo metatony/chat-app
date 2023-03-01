@@ -15,6 +15,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-|![Screenshot_1677629656](<img src= "https://user-images.githubusercontent.com/98693285/222018726-aa4f97f8-1c22-432b-b6e8-888fa72716bc.png" width=600 height=300>)| ![Login Screen](https://github.com/devinsays/flutter_todo/raw/master/docs/login.jpg)|
+|!<img width="391" height="753" src= "https://user-images.githubusercontent.com/98693285/222018726-aa4f97f8-1c22-432b-b6e8-888fa72716bc.png">| ![Login Screen](https://github.com/devinsays/flutter_todo/raw/master/docs/login.jpg)|
 |--|--|
 ![To Do List](https://github.com/devinsays/flutter_todo/raw/master/docs/todo-list.jpg)|![Add To Do](https://github.com/devinsays/flutter_todo/raw/master/docs/add-todo.jpg)
